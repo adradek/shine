@@ -13,6 +13,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
 RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
   nano \
   nodejs \
+  postgresql-client \
   yarn
 
 WORKDIR /usr/src/app
