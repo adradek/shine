@@ -1,7 +1,19 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+if (cnt = Customer.count) < 350_000
+  (Customer.pluck(:id).max...1_500_000).each do |i|
+    username = "#{Faker::Internet.username}#{i}"
+    # first_name, last_name, _ = Faker::Name.name.split(' ')
+
+    Customer.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      username: username,
+      email: "#{username}@#{Faker::Internet.domain_name}"
+    )
+
+    print '.' if i % 10000 == 0
+  end
+
+  puts
+else
+  puts "There are enough customers in the system (#{cnt})"
+end
